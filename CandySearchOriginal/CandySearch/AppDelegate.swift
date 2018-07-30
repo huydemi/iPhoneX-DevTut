@@ -34,9 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
     splitViewController.delegate = self
     
-    UISearchBar.appearance().barTintColor = .candyGreen
+    //UISearchBar.appearance().barTintColor = .candyGreen
     UISearchBar.appearance().tintColor = .white
-    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .candyGreen
+    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
+    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white    
+    
+    let placeholderAttributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.white, NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.systemFont(ofSize: UIFont.systemFontSize)]
+    let attributedPlaceholder: NSAttributedString = NSAttributedString(string: "Search", attributes: placeholderAttributes)
+    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = attributedPlaceholder
+
     return true    
   }
   

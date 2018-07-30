@@ -39,7 +39,17 @@ class MasterViewController: UIViewController, UITableViewDataSource, UITableView
     
     // Setup the Search Controller
     searchController.searchResultsUpdater = self
-    tableView.tableHeaderView = searchController.searchBar
+    
+    //tableView.tableHeaderView = searchController.searchBar
+    // replace tableHeaderView assignment with this
+    if #available(iOS 11.0, *) {
+      self.navigationItem.searchController = searchController
+      // Search bar is always visible
+      self.navigationItem.hidesSearchBarWhenScrolling = false
+    } else {
+      tableView.tableHeaderView = searchController.searchBar
+    }
+    
     definesPresentationContext = true
     searchController.dimsBackgroundDuringPresentation = false
     
@@ -71,6 +81,15 @@ class MasterViewController: UIViewController, UITableViewDataSource, UITableView
       let controllers = splitViewController.viewControllers
       detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
     }
+    
+    let textField = searchController.searchBar.value(forKey: "searchField") as! UITextField
+    let glassIconView = textField.leftView as! UIImageView
+    glassIconView.image = glassIconView.image?.withRenderingMode(.alwaysTemplate)
+    glassIconView.tintColor = .white
+    let clearButton = textField.value(forKey: "clearButton") as! UIButton
+    clearButton.setImage(clearButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
+    clearButton.tintColor = .white
+
   }
   
   override func viewWillAppear(_ animated: Bool) {
