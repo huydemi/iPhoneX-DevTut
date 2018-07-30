@@ -63,8 +63,15 @@ class MasterViewController: UITableViewController {
 
     searchController.searchBar.scopeButtonTitles = ["All", "Chocolate", "Hard", "Other"]
     searchController.searchBar.delegate = self
-
-    // TODO: In iOS 11, integrate search controller into nav bar
+    
+    // In iOS 11, integrate search controller into navigation bar
+    if #available(iOS 11.0, *) {
+      self.navigationItem.searchController = searchController
+      // Search bar is always visible
+      self.navigationItem.hidesSearchBarWhenScrolling = false
+    } else {
+      tableView.tableHeaderView = searchController.searchBar
+    }
 
   }
   
